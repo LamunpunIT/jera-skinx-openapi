@@ -1364,6 +1364,41 @@
           "Webhook"
         ]
       }
+    },
+    "/jera/webhooks/voucher-order-cancelled/": {
+      "post": {
+        "operationId": "WebhooksController_voucherOrderCancelled",
+        "summary": "Cancel Voucher Code",
+        "description": "Full URL: <code>https://{subdomain}.jeracloud.com/jera/webhook/voucher-order-cancelled/</code><br>เมื่อลูกค้าทำการขอคืนเงิน Voucher Deal ผ่าน app SkinX ให้เรียกใช้ API นี้เพื่อให้ทาง JeraCloud ทำการยกเลิก Voucher Code",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Token {authtoken}"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoucherOrderCancelDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Webhook"
+        ]
+      }
     }
   },
   "info": {
@@ -2996,6 +3031,33 @@
           },
           "order": {
             "$ref": "#/components/schemas/VoucherOrderDto"
+          }
+        },
+        "required": [
+          "type",
+          "order"
+        ]
+      },
+      "VoucherOrderCancelDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "default": "VoucherOrderCancelled",
+            "enum": [
+              "ClinicStatusChanged",
+              "VoucherDealStatusChanged",
+              "VoucherOrderCreated",
+              "VoucherOrderCancelled"
+            ]
+          },
+          "voucherCode": {
+            "type": "string",
+            "description": "รหัส voucher ใช้สำหรับ redeem คอร์สในคลินิก"
+          },
+          "reason": {
+            "type": "string",
+            "description": "เหตุผลที่ยกเลิก"
           }
         },
         "required": [
