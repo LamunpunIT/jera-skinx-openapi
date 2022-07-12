@@ -1,0 +1,2947 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/jera/addresses": {
+      "get": {
+        "operationId": "JeraController_getMasterAddresses",
+        "summary": "Get Master Addresses [used in create & update clinic]",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "\n      Schema:\n      {\n        \"[PROVINCE]\": {\n          \"[DISTINCT]\": {\n            \"[SUBDISTRICT]\": {\n              \"[POST_CODE]\": [MASTER_ADDRESS_ID]\n            },\n            ...\n          },\n          ...\n        },\n        ...\n      }\n    ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "example": "\n        {\n          \"กรุงเทพ\": {\n            \"คลองสาน\": {\n              \"คลองต้นไทร\": {\n                \"10600\": 4\n              },\n              \"คลองสาน\": {\n                \"10600\": 5\n              }\n            },\n            \"คลองสามวา\": {\n              \"ทรายกองดิน\": {\n                \"10510\": 8\n              }\n            }\n          },\n          \"กระบี่\": {\n            \"คลองท่อม\": {\n              \"คลองท่อมเหนือ\": {\n                \"81120\": 6553\n              }\n            }\n          }\n        }\n      "
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Master Data"
+        ]
+      }
+    },
+    "/jera/voucher-types": {
+      "get": {
+        "operationId": "JeraController_getVoucherTypes",
+        "summary": "Get Voucher Types [used in create & update Voucher Deal]",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VoucherTypeDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Master Data"
+        ]
+      }
+    },
+    "/jera/procedure-categories": {
+      "get": {
+        "operationId": "JeraController_getProcedureCategories",
+        "summary": "ข้อมูลหมวดหมู่หัตถการ [used in create & update Voucher Deal]",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProcedureCategoryDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Master Data"
+        ]
+      }
+    },
+    "/jera/clinics": {
+      "post": {
+        "operationId": "JeraController_createClinic",
+        "summary": "Create Clinic",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClinicDto"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClinicDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClinicDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Clinic"
+        ]
+      }
+    },
+    "/jera/clinics/{clinicId}": {
+      "get": {
+        "operationId": "JeraController_getClinicById",
+        "summary": "Get Clinic by Clinic ID",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClinicDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Clinic"
+        ]
+      },
+      "patch": {
+        "operationId": "JeraController_updateClinic",
+        "summary": "Update Clinic",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateClinicDto"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateClinicDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClinicDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Clinic"
+        ]
+      }
+    },
+    "/jera/clinics/{clinicId}/jwt": {
+      "get": {
+        "operationId": "JeraController_getJwt",
+        "summary": "Get JWT Token for Clinic [Used in case clinic call SkinX API directly]",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JwtDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Clinic"
+        ]
+      }
+    },
+    "/jera/clinics/{clinicId}/branches": {
+      "post": {
+        "operationId": "JeraController_createClinicBranches",
+        "summary": "Create Clinic Branch",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClinicBranchDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClinicBranchDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Clinic Branch"
+        ]
+      },
+      "get": {
+        "operationId": "JeraController_getClinicBranches",
+        "summary": "Get All Branches for specific clinic",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClinicBranchDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Clinic Branch"
+        ]
+      }
+    },
+    "/jera/clinics/{clinicId}/branches/{branchId}": {
+      "get": {
+        "operationId": "JeraController_getClinicBranch",
+        "summary": "Get Clinic Branch by Branch ID",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "branchId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClinicBranchDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Clinic Branch"
+        ]
+      },
+      "patch": {
+        "operationId": "JeraController_updateClinicBranch",
+        "summary": "Update Clinic Branch",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "branchId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateClinicBranchDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClinicBranchDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Clinic Branch"
+        ]
+      },
+      "delete": {
+        "operationId": "JeraController_deleteClinicBranch",
+        "summary": "Delete Clinic Branch",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "branchId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Clinic Branch"
+        ]
+      }
+    },
+    "/jera/clinics/{clinicId}/vouchers/draft": {
+      "post": {
+        "operationId": "JeraController_createVoucherDealAsDraft",
+        "summary": "Create Voucher Deal as Draft",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateVoucherDealDto"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateVoucherDealDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoucherDealDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Voucher Deal"
+        ]
+      }
+    },
+    "/jera/clinics/{clinicId}/vouchers/review": {
+      "post": {
+        "operationId": "JeraController_createVoucherDealForReview",
+        "summary": "Create Voucher Deal for review",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateVoucherDealDto"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateVoucherDealDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoucherDealDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Voucher Deal"
+        ]
+      }
+    },
+    "/jera/clinics/{clinicId}/vouchers": {
+      "get": {
+        "operationId": "JeraController_GetVoucherDeals",
+        "summary": "Get Voucher Deals for specific clinic",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "draft",
+                "review",
+                "reviewed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "size",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "data"
+                  ],
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/PaginatedResponse"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/VoucherDealDto"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Voucher Deal"
+        ]
+      }
+    },
+    "/jera/clinics/{clinicId}/vouchers/{id}": {
+      "get": {
+        "operationId": "JeraController_GetVoucherDealById",
+        "summary": "Get Voucher Deals by ID",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoucherDealDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Voucher Deal"
+        ]
+      },
+      "delete": {
+        "operationId": "JeraController_deleteVoucherDeal",
+        "summary": "Delete Voucher Deal",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Voucher Deal"
+        ]
+      }
+    },
+    "/jera/clinics/{clinicId}/vouchers/{id}/draft": {
+      "patch": {
+        "operationId": "JeraController_updateVoucherDealAsDraft",
+        "summary": "Update Voucher Deal as Draft",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateVoucherDealDto"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateVoucherDealDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoucherDealDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Voucher Deal"
+        ]
+      }
+    },
+    "/jera/clinics/{clinicId}/vouchers/{id}/review": {
+      "patch": {
+        "operationId": "JeraController_updateVoucherDealForReview",
+        "summary": "Update Voucher Deal for review",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateVoucherDealDto"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateVoucherDealDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoucherDealDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Voucher Deal"
+        ]
+      }
+    },
+    "/jera/clinics/{clinicId}/vouchers/{id}/online": {
+      "patch": {
+        "operationId": "JeraController_onlineVoucherDeal",
+        "summary": "On/Off Voucher Deal",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OnlineVoucherDealDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoucherDealDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Voucher Deal"
+        ]
+      }
+    },
+    "/jera/clinics/{clinicId}/voucher-orders": {
+      "get": {
+        "operationId": "JeraController_getVoucherOrders",
+        "summary": "Get Voucher Orders for specific clinic",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "invoiceId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "orderNo",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "voucherNo",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "doctor",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "patient",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "size",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "data"
+                  ],
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/PaginatedResponse"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/VoucherOrderDto"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Voucher Order"
+        ]
+      }
+    },
+    "/jera/clinics/{clinicId}/voucher-orders/{id}": {
+      "get": {
+        "operationId": "JeraController_getVoucherOrder",
+        "summary": "Get Voucher Order by ID",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoucherOrderDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Voucher Order"
+        ]
+      },
+      "patch": {
+        "operationId": "JeraController_redeemVoucherOrder",
+        "summary": "Redeem Voucher Order",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RedeemVoucherOrderDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoucherOrderDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Voucher Order"
+        ]
+      }
+    },
+    "/jera/clinics/{clinicId}/voucher-summary": {
+      "get": {
+        "operationId": "JeraController_getVoucherOrderSummary",
+        "summary": "Get Voucher Order Summary",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clinicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "date",
+            "required": false,
+            "in": "query",
+            "description": "Date Range",
+            "example": "2022-06-10,2022-06-20",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoucherOrderSummaryDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Voucher Order"
+        ]
+      }
+    },
+    "/jera/webhooks/clinic-status-changed": {
+      "post": {
+        "operationId": "WebhooksController_clinicStatusChanged",
+        "summary": "This is a dummy endpoint because the endpoint must be created by JERA",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClinicStatusChangedDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Webhook"
+        ]
+      }
+    },
+    "/jera/webhooks/voucher-deal-status-changed": {
+      "post": {
+        "operationId": "WebhooksController_voucherDealStatusChanged",
+        "summary": "This is a dummy endpoint because the endpoint must be created by JERA",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoucherDealStatusChangedDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Webhook"
+        ]
+      }
+    },
+    "/jera/webhooks/voucher-order-created": {
+      "post": {
+        "operationId": "WebhooksController_voucherOrderCreated",
+        "summary": "This is a dummy endpoint because the endpoint must be created by JERA",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoucherOrderCreatedDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Webhook"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "SkinX for JERA Cloud API Documentation",
+    "description": "SkinX for JERA Cloud API Documentation",
+    "version": "0.0.1",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "JERA Cloud",
+      "description": ""
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "PaginatedResponse": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "count"
+        ]
+      },
+      "VoucherTypeDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "name",
+          "value"
+        ]
+      },
+      "ProcedureCategoryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "nameEn": {
+            "type": "string"
+          },
+          "nameTh": {
+            "type": "string"
+          },
+          "isRecommended": {
+            "type": "boolean"
+          },
+          "showPriority": {
+            "type": "number"
+          },
+          "code": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          },
+          "keywords": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "nameEn",
+          "nameTh",
+          "isRecommended",
+          "showPriority",
+          "code",
+          "icon"
+        ]
+      },
+      "WorkHour": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string",
+            "example": "09:00"
+          },
+          "end": {
+            "type": "string",
+            "example": "18:00"
+          }
+        },
+        "required": [
+          "start",
+          "end"
+        ]
+      },
+      "ClinicWorkHourDto": {
+        "type": "object",
+        "properties": {
+          "monday": {
+            "$ref": "#/components/schemas/WorkHour"
+          },
+          "tuesday": {
+            "$ref": "#/components/schemas/WorkHour"
+          },
+          "wednesday": {
+            "$ref": "#/components/schemas/WorkHour"
+          },
+          "thursday": {
+            "$ref": "#/components/schemas/WorkHour"
+          },
+          "friday": {
+            "$ref": "#/components/schemas/WorkHour"
+          },
+          "saturday": {
+            "$ref": "#/components/schemas/WorkHour"
+          },
+          "sunday": {
+            "$ref": "#/components/schemas/WorkHour"
+          }
+        }
+      },
+      "CreateStoreDto": {
+        "type": "object",
+        "properties": {
+          "storeSMSPhoneOne": {
+            "type": "string",
+            "description": "ส่ง SMS แจ้ง เมื่อ voucher order ถูกสร้าง"
+          },
+          "storeSMSPhoneTwo": {
+            "type": "string",
+            "description": "ส่ง SMS แจ้ง เมื่อ voucher order ถูกสร้าง"
+          },
+          "taxId": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "masterAddressId": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "storeSMSPhoneOne",
+          "taxId",
+          "address",
+          "masterAddressId"
+        ]
+      },
+      "CreateClinicDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "ชื่อคลินิก"
+          },
+          "type": {
+            "enum": [
+              "JURISTIC_PERSON",
+              "INDIVIDUAL"
+            ],
+            "type": "string",
+            "description": "นิติบุคคล / บุคคลธรรมดา"
+          },
+          "clinicLicenseNo": {
+            "type": "string",
+            "description": "เลขที่ใบอนุญาตคลินิก [ตัวเลข 11 หลัก]"
+          },
+          "doctorName": {
+            "type": "string",
+            "description": "แพทย์ผู้ดำเนินการสถานพยาบาล"
+          },
+          "address": {
+            "type": "string",
+            "description": "ที่อยู่คลินิก (บ้านเลขที่)"
+          },
+          "subdistrict": {
+            "type": "string",
+            "description": "ที่อยู่คลินิก (ตำบล)"
+          },
+          "district": {
+            "type": "string",
+            "description": "ที่อยู่คลินิก (อำเภอ)"
+          },
+          "province": {
+            "type": "string",
+            "description": "ที่อยู่คลินิก (จังหวัด)"
+          },
+          "postCode": {
+            "type": "string",
+            "description": "ที่อยู่คลินิก (รหัสไปรษณีย์)"
+          },
+          "billingAddress": {
+            "type": "string",
+            "description": "ที่อยู่ส่งเอกสาร (บ้านเลขที่) - ไม่ต้องระบุ ถ้าที่อยู่ส่งเอกสารคือที่อยู่คลินิก"
+          },
+          "billingSubdistrict": {
+            "type": "string",
+            "description": "ที่อยู่ส่งเอกสาร (ตำบล) - ไม่ต้องระบุ ถ้าที่อยู่ส่งเอกสารคือที่อยู่คลินิก"
+          },
+          "billingDistrict": {
+            "type": "string",
+            "description": "ที่อยู่ส่งเอกสาร (อำเภอ) - ไม่ต้องระบุ ถ้าที่อยู่ส่งเอกสารคือที่อยู่คลินิก"
+          },
+          "billingProvince": {
+            "type": "string",
+            "description": "ที่อยู่ส่งเอกสาร (จังหวัด) - ไม่ต้องระบุ ถ้าที่อยู่ส่งเอกสารคือที่อยู่คลินิก"
+          },
+          "billingPostCode": {
+            "type": "string",
+            "description": "ที่อยู่ส่งเอกสาร (รหัสไปรษณีย์) - ไม่ต้องระบุ ถ้าที่อยู่ส่งเอกสารคือที่อยู่คลินิก"
+          },
+          "contactPersonName": {
+            "type": "string",
+            "description": "บุคคลที่ติดต่อ (ชื่อ)"
+          },
+          "contactPersonEmail": {
+            "type": "string",
+            "description": "บุคคลที่ติดต่อ (Email)"
+          },
+          "contactPersonTelNo": {
+            "type": "string",
+            "description": "บุคคลที่ติดต่อ (Telephone Number)"
+          },
+          "coverPicture": {
+            "type": "string",
+            "format": "binary"
+          },
+          "logo": {
+            "type": "string",
+            "format": "binary"
+          },
+          "bankAccount": {
+            "type": "string",
+            "format": "binary",
+            "description": "สำเนาสมุดบัญชีธนาคาร [PDF / JPG File]"
+          },
+          "thaiIdCard": {
+            "type": "string",
+            "format": "binary",
+            "description": "สำเนาบัตรประชาชน [PDF / JPG File] - ต้องระบุ กรณีเลือกประเภทบุคคลทั่วไป"
+          },
+          "clinicLicense": {
+            "type": "string",
+            "format": "binary",
+            "description": "สำเนาใบประกอบกิจการสถานพยาบาล [PDF / JPG File]"
+          },
+          "medicalFacilityOperateLicense": {
+            "type": "string",
+            "format": "binary",
+            "description": "สำเนาใบอนุญาตให้ดำเนินการสถานพยาบาล [PDF / JPG File]"
+          },
+          "passportDocumentHolder": {
+            "type": "string",
+            "format": "binary",
+            "description": "สำเนาหนังสือรับรองบริษัท รับรองสำเนาถูกต้องโดยกรรมการผู้มีอำนาจ และประทับตราบริษัท [PDF / JPG File] - ต้องระบุ กรณีเลือกประเภทนิติบุคคล"
+          },
+          "vatRegistration": {
+            "type": "string",
+            "format": "binary",
+            "description": "สำเนาใบ ภพ 20 รับรองสำเนาถูกต้องโดยกรรมการผู้มีอำนาจ และประทับตราบริษัท [PDF / JPG File] - กรณีเลือกประเภทนิติบุคคล"
+          },
+          "authorizedDirectorThaiIdCard": {
+            "type": "string",
+            "format": "binary",
+            "description": "สำเนาบัตรประชานกรรมการผู้รับรองเอกสารประกอบ พร้อมรับรองสำเนาถูกต้อง [PDF / JPG File] - ต้องระบุ กรณีเลือกประเภทนิติบุคคล"
+          },
+          "workHours": {
+            "description": "Because of multipart/form-data limitation, this property data must be stringified (sent as text)",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ClinicWorkHourDto"
+              }
+            ]
+          },
+          "store": {
+            "description": "Because of multipart/form-data limitation, this property data must be stringified (sent as text)",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CreateStoreDto"
+              }
+            ]
+          },
+          "mainPhone": {
+            "type": "string",
+            "description": "ใช้สำหรับส่ง Notification ผ่านระบบ SMS"
+          },
+          "username": {
+            "type": "string",
+            "description": "E-Mail Format"
+          },
+          "password": {
+            "type": "string",
+            "description": "at least 8 characters with special character"
+          },
+          "detailThai": {
+            "type": "string"
+          },
+          "detailEng": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string"
+          },
+          "googleLinkMap": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "type",
+          "address",
+          "subdistrict",
+          "district",
+          "province",
+          "postCode",
+          "contactPersonName",
+          "contactPersonEmail",
+          "contactPersonTelNo",
+          "coverPicture",
+          "logo",
+          "bankAccount",
+          "clinicLicense",
+          "medicalFacilityOperateLicense",
+          "workHours",
+          "store",
+          "username",
+          "password"
+        ]
+      },
+      "AddressDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "province": {
+            "type": "string"
+          },
+          "district": {
+            "type": "string"
+          },
+          "subDistrict": {
+            "type": "string"
+          },
+          "provinceEn": {
+            "type": "string"
+          },
+          "districtEn": {
+            "type": "string"
+          },
+          "subDistrictEn": {
+            "type": "string"
+          },
+          "postCode": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "province",
+          "district",
+          "subDistrict",
+          "provinceEn",
+          "districtEn",
+          "subDistrictEn",
+          "postCode"
+        ]
+      },
+      "StoreDto": {
+        "type": "object",
+        "properties": {
+          "storeSMSPhoneOne": {
+            "type": "string",
+            "description": "ส่ง SMS แจ้ง เมื่อ voucher order ถูกสร้าง"
+          },
+          "storeSMSPhoneTwo": {
+            "type": "string",
+            "description": "ส่ง SMS แจ้ง เมื่อ voucher order ถูกสร้าง"
+          },
+          "taxId": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "masterAddressId": {
+            "type": "number"
+          },
+          "id": {
+            "type": "number"
+          },
+          "uuid": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "masterAddress": {
+            "$ref": "#/components/schemas/AddressDto"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "storeSMSPhoneOne",
+          "taxId",
+          "address",
+          "masterAddressId",
+          "id",
+          "uuid",
+          "name",
+          "masterAddress",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "PointDto": {
+        "type": "object",
+        "properties": {
+          "coordinates": {
+            "description": "latitude, longitude",
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "Point"
+            ]
+          }
+        },
+        "required": [
+          "coordinates",
+          "type"
+        ]
+      },
+      "ClinicBranchDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "telNo": {
+            "type": "string"
+          },
+          "workHours": {
+            "$ref": "#/components/schemas/ClinicWorkHourDto"
+          },
+          "branchLocation": {
+            "type": "string"
+          },
+          "googleMapLink": {
+            "type": "string"
+          },
+          "geometry": {
+            "$ref": "#/components/schemas/PointDto"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "telNo",
+          "workHours",
+          "branchLocation",
+          "googleMapLink",
+          "geometry"
+        ]
+      },
+      "ClinicDto": {
+        "type": "object",
+        "properties": {
+          "clinicLicenseNo": {
+            "type": "string",
+            "description": "เลขที่ใบอนุญาตคลินิก [ตัวเลข 11 หลัก]"
+          },
+          "doctorName": {
+            "type": "string",
+            "description": "แพทย์ผู้ดำเนินการสถานพยาบาล"
+          },
+          "address": {
+            "type": "string",
+            "description": "ที่อยู่คลินิก (บ้านเลขที่)"
+          },
+          "subdistrict": {
+            "type": "string",
+            "description": "ที่อยู่คลินิก (ตำบล)"
+          },
+          "district": {
+            "type": "string",
+            "description": "ที่อยู่คลินิก (อำเภอ)"
+          },
+          "province": {
+            "type": "string",
+            "description": "ที่อยู่คลินิก (จังหวัด)"
+          },
+          "postCode": {
+            "type": "string",
+            "description": "ที่อยู่คลินิก (รหัสไปรษณีย์)"
+          },
+          "billingAddress": {
+            "type": "string",
+            "description": "ที่อยู่ส่งเอกสาร (บ้านเลขที่)"
+          },
+          "billingSubdistrict": {
+            "type": "string",
+            "description": "ที่อยู่ส่งเอกสาร (ตำบล)"
+          },
+          "billingDistrict": {
+            "type": "string",
+            "description": "ที่อยู่ส่งเอกสาร (อำเภอ)"
+          },
+          "billingProvince": {
+            "type": "string",
+            "description": "ที่อยู่ส่งเอกสาร (จังหวัด)"
+          },
+          "billingPostCode": {
+            "type": "string",
+            "description": "ที่อยู่ส่งเอกสาร (รหัสไปรษณีย์)"
+          },
+          "contactPersonName": {
+            "type": "string",
+            "description": "บุคคลที่ติดต่อ (ชื่อ)"
+          },
+          "contactPersonEmail": {
+            "type": "string",
+            "description": "บุคคลที่ติดต่อ (Email)"
+          },
+          "contactPersonTelNo": {
+            "type": "string",
+            "description": "บุคคลที่ติดต่อ (Telephone Number)"
+          },
+          "bankAccount": {
+            "type": "string",
+            "description": "สำเนาสมุดบัญชีธนาคาร"
+          },
+          "thaiIdCard": {
+            "type": "string",
+            "description": "สำเนาบัตรประชาชน"
+          },
+          "clinicLicense": {
+            "type": "string",
+            "description": "สำเนาใบประกอบกิจการสถานพยาบาล"
+          },
+          "medicalFacilityOperateLicense": {
+            "type": "string",
+            "description": "สำเนาใบอนุญาตให้ดำเนินการสถานพยาบาล"
+          },
+          "passportDocumentHolder": {
+            "type": "string",
+            "description": "สำเนาหนังสือรับรองบริษัท รับรองสำเนาถูกต้องโดยกรรมการผู้มีอำนาจ และประทับตราบริษัท"
+          },
+          "vatRegistration": {
+            "type": "string",
+            "description": "สำเนาใบ ภพ 20 รับรองสำเนาถูกต้องโดยกรรมการผู้มีอำนาจ และประทับตราบริษัท"
+          },
+          "authorizedDirectorThaiIdCard": {
+            "type": "string",
+            "description": "สำเนาบัตรประชานกรรมการผู้รับรองเอกสารประกอบ พร้อมรับรองสำเนาถูกต้อง"
+          },
+          "mainPhone": {
+            "type": "string",
+            "description": "ใช้สำหรับส่ง Notification ผ่านระบบ SMS"
+          },
+          "id": {
+            "type": "number"
+          },
+          "status": {
+            "enum": [
+              "reviewed",
+              "review",
+              "reject"
+            ],
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "JURISTIC_PERSON",
+              "INDIVIDUAL"
+            ],
+            "type": "string"
+          },
+          "coverPicture": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "detailThai": {
+            "type": "string"
+          },
+          "detailEng": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string"
+          },
+          "googleLinkMap": {
+            "type": "string"
+          },
+          "workHours": {
+            "$ref": "#/components/schemas/ClinicWorkHourDto"
+          },
+          "stores": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StoreDto"
+            }
+          },
+          "priority": {
+            "type": "number"
+          },
+          "branches": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClinicBranchDto"
+            }
+          },
+          "reason": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "address",
+          "subdistrict",
+          "district",
+          "province",
+          "postCode",
+          "contactPersonName",
+          "contactPersonEmail",
+          "contactPersonTelNo",
+          "bankAccount",
+          "clinicLicense",
+          "medicalFacilityOperateLicense",
+          "id",
+          "status",
+          "name",
+          "type",
+          "coverPicture",
+          "logo",
+          "workHours",
+          "stores",
+          "priority",
+          "branches",
+          "reason",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "UpdateClinicDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "ชื่อคลินิก"
+          },
+          "type": {
+            "enum": [
+              "JURISTIC_PERSON",
+              "INDIVIDUAL"
+            ],
+            "type": "string",
+            "description": "นิติบุคคล / บุคคลธรรมดา"
+          },
+          "clinicLicenseNo": {
+            "type": "string",
+            "description": "เลขที่ใบอนุญาตคลินิก [ตัวเลข 11 หลัก]"
+          },
+          "doctorName": {
+            "type": "string",
+            "description": "แพทย์ผู้ดำเนินการสถานพยาบาล"
+          },
+          "address": {
+            "type": "string",
+            "description": "ที่อยู่คลินิก (บ้านเลขที่)"
+          },
+          "subdistrict": {
+            "type": "string",
+            "description": "ที่อยู่คลินิก (ตำบล)"
+          },
+          "district": {
+            "type": "string",
+            "description": "ที่อยู่คลินิก (อำเภอ)"
+          },
+          "province": {
+            "type": "string",
+            "description": "ที่อยู่คลินิก (จังหวัด)"
+          },
+          "postCode": {
+            "type": "string",
+            "description": "ที่อยู่คลินิก (รหัสไปรษณีย์)"
+          },
+          "billingAddress": {
+            "type": "string",
+            "description": "ที่อยู่ส่งเอกสาร (บ้านเลขที่) - ไม่ต้องระบุ ถ้าที่อยู่ส่งเอกสารคือที่อยู่คลินิก"
+          },
+          "billingSubdistrict": {
+            "type": "string",
+            "description": "ที่อยู่ส่งเอกสาร (ตำบล) - ไม่ต้องระบุ ถ้าที่อยู่ส่งเอกสารคือที่อยู่คลินิก"
+          },
+          "billingDistrict": {
+            "type": "string",
+            "description": "ที่อยู่ส่งเอกสาร (อำเภอ) - ไม่ต้องระบุ ถ้าที่อยู่ส่งเอกสารคือที่อยู่คลินิก"
+          },
+          "billingProvince": {
+            "type": "string",
+            "description": "ที่อยู่ส่งเอกสาร (จังหวัด) - ไม่ต้องระบุ ถ้าที่อยู่ส่งเอกสารคือที่อยู่คลินิก"
+          },
+          "billingPostCode": {
+            "type": "string",
+            "description": "ที่อยู่ส่งเอกสาร (รหัสไปรษณีย์) - ไม่ต้องระบุ ถ้าที่อยู่ส่งเอกสารคือที่อยู่คลินิก"
+          },
+          "contactPersonName": {
+            "type": "string",
+            "description": "บุคคลที่ติดต่อ (ชื่อ)"
+          },
+          "contactPersonEmail": {
+            "type": "string",
+            "description": "บุคคลที่ติดต่อ (Email)"
+          },
+          "contactPersonTelNo": {
+            "type": "string",
+            "description": "บุคคลที่ติดต่อ (Telephone Number)"
+          },
+          "coverPicture": {
+            "type": "string",
+            "format": "binary"
+          },
+          "logo": {
+            "type": "string",
+            "format": "binary"
+          },
+          "bankAccount": {
+            "type": "string",
+            "format": "binary",
+            "description": "สำเนาสมุดบัญชีธนาคาร [PDF / JPG File]"
+          },
+          "thaiIdCard": {
+            "type": "string",
+            "format": "binary",
+            "description": "สำเนาบัตรประชาชน [PDF / JPG File] - ต้องระบุ กรณีเลือกประเภทบุคคลทั่วไป"
+          },
+          "clinicLicense": {
+            "type": "string",
+            "format": "binary",
+            "description": "สำเนาใบประกอบกิจการสถานพยาบาล [PDF / JPG File]"
+          },
+          "medicalFacilityOperateLicense": {
+            "type": "string",
+            "format": "binary",
+            "description": "สำเนาใบอนุญาตให้ดำเนินการสถานพยาบาล [PDF / JPG File]"
+          },
+          "passportDocumentHolder": {
+            "type": "string",
+            "format": "binary",
+            "description": "สำเนาหนังสือรับรองบริษัท รับรองสำเนาถูกต้องโดยกรรมการผู้มีอำนาจ และประทับตราบริษัท [PDF / JPG File] - ต้องระบุ กรณีเลือกประเภทนิติบุคคล"
+          },
+          "vatRegistration": {
+            "type": "string",
+            "format": "binary",
+            "description": "สำเนาใบ ภพ 20 รับรองสำเนาถูกต้องโดยกรรมการผู้มีอำนาจ และประทับตราบริษัท [PDF / JPG File] - กรณีเลือกประเภทนิติบุคคล"
+          },
+          "authorizedDirectorThaiIdCard": {
+            "type": "string",
+            "format": "binary",
+            "description": "สำเนาบัตรประชานกรรมการผู้รับรองเอกสารประกอบ พร้อมรับรองสำเนาถูกต้อง [PDF / JPG File] - ต้องระบุ กรณีเลือกประเภทนิติบุคคล"
+          },
+          "workHours": {
+            "description": "Because of multipart/form-data limitation, this property data must be stringified (sent as text)",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ClinicWorkHourDto"
+              }
+            ]
+          },
+          "store": {
+            "description": "Because of multipart/form-data limitation, this property data must be stringified (sent as text)",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CreateStoreDto"
+              }
+            ]
+          },
+          "mainPhone": {
+            "type": "string",
+            "description": "ใช้สำหรับส่ง Notification ผ่านระบบ SMS"
+          },
+          "detailThai": {
+            "type": "string"
+          },
+          "detailEng": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string"
+          },
+          "googleLinkMap": {
+            "type": "string"
+          }
+        }
+      },
+      "JwtDto": {
+        "type": "object",
+        "properties": {
+          "clinicId": {
+            "type": "number"
+          },
+          "type": {
+            "type": "object",
+            "default": "token"
+          },
+          "secret": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "clinicId",
+          "type",
+          "secret"
+        ]
+      },
+      "CreateClinicBranchDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "telNo": {
+            "type": "string"
+          },
+          "workHours": {
+            "$ref": "#/components/schemas/ClinicWorkHourDto"
+          },
+          "branchLocation": {
+            "type": "string"
+          },
+          "googleMapLink": {
+            "type": "string"
+          },
+          "geometry": {
+            "$ref": "#/components/schemas/PointDto"
+          }
+        },
+        "required": [
+          "name",
+          "workHours"
+        ]
+      },
+      "UpdateClinicBranchDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "telNo": {
+            "type": "string"
+          },
+          "workHours": {
+            "$ref": "#/components/schemas/ClinicWorkHourDto"
+          },
+          "branchLocation": {
+            "type": "string"
+          },
+          "googleMapLink": {
+            "type": "string"
+          },
+          "geometry": {
+            "$ref": "#/components/schemas/PointDto"
+          }
+        }
+      },
+      "SimpleResponseDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "success"
+        ]
+      },
+      "CreateVoucherDealDto": {
+        "type": "object",
+        "properties": {
+          "doctorNote": {
+            "type": "string",
+            "description": "เงื่อนไข Promotion เพิ่มเติม"
+          },
+          "startAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "FORMAT: YYYY-MM-DD",
+            "example": "2022-10-14"
+          },
+          "endAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "ต้องระบุถ้า startDate มีค่า, FORMAT: YYYY-MM-DD",
+            "example": "2022-10-31"
+          },
+          "price": {
+            "type": "number",
+            "description": "ราคาต้นทุนของ SkinX (ราคาที่ขายให้ SkinX)"
+          },
+          "sellingPrice": {
+            "type": "number",
+            "description": "ราคาที่ SkinX ขายให้คนไข้"
+          },
+          "tagPrice": {
+            "type": "number",
+            "description": "ราคาที่ SkinX ขายให้คนไข้ก่อนลดราคา"
+          },
+          "discountPercentage": {
+            "type": "number",
+            "description": "ส่วนต่างระหว่าง tagPrice กับ sellingPrice"
+          },
+          "procedureCategories": {
+            "description": "Array of procedure category id",
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "serviceBranches": {
+            "description": "Array of clinic branch id",
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "voucherExpireAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "ต้องระบุ ถ้า voucherLifeTime ไม่มีค่า, FORMAT: YYYY-MM-DD",
+            "example": "2022-10-31"
+          },
+          "voucherLifeTime": {
+            "type": "number",
+            "description": "ต้องระบุ ถ้า voucherExpireAt ไม่มีค่า"
+          },
+          "mainPicture": {
+            "type": "string",
+            "format": "binary"
+          },
+          "detailPictures": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "binary"
+            }
+          },
+          "canTransfer": {
+            "type": "boolean",
+            "default": false
+          },
+          "online": {
+            "type": "boolean",
+            "default": false
+          },
+          "status": {
+            "enum": [
+              "draft",
+              "review"
+            ],
+            "type": "string",
+            "default": "draft"
+          },
+          "requireDoctor": {
+            "type": "boolean",
+            "default": false
+          },
+          "name": {
+            "type": "string"
+          },
+          "nameEn": {
+            "type": "string"
+          },
+          "adsMessage": {
+            "type": "string"
+          },
+          "indication": {
+            "type": "string"
+          },
+          "voucherType": {
+            "type": "number"
+          },
+          "keywords": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "priceDetail": {
+            "type": "string"
+          },
+          "howToUseVoucherDeal": {
+            "type": "string"
+          },
+          "conditionToUseVoucherDeal": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "doctorNote",
+          "price",
+          "sellingPrice",
+          "tagPrice",
+          "discountPercentage",
+          "procedureCategories",
+          "serviceBranches",
+          "mainPicture",
+          "detailPictures",
+          "status",
+          "name",
+          "nameEn",
+          "adsMessage",
+          "indication",
+          "voucherType",
+          "priceDetail",
+          "howToUseVoucherDeal",
+          "conditionToUseVoucherDeal"
+        ]
+      },
+      "VoucherDealDto": {
+        "type": "object",
+        "properties": {
+          "doctorNote": {
+            "type": "string",
+            "description": "เงื่อนไข Promotion เพิ่มเติม"
+          },
+          "price": {
+            "type": "number",
+            "description": "ราคาต้นทุนของ SkinX (ราคาที่ขายให้ SkinX)"
+          },
+          "sellingPrice": {
+            "type": "number",
+            "description": "ราคาที่ SkinX ขายให้คนไข้"
+          },
+          "tagPrice": {
+            "type": "number",
+            "description": "ราคาที่ SkinX ขายให้คนไข้ก่อนลดราคา"
+          },
+          "discountPercentage": {
+            "type": "number",
+            "description": "ส่วนต่างระหว่าง tagPrice กับ sellingPrice"
+          },
+          "id": {
+            "type": "number"
+          },
+          "drugItemId": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "nameEn": {
+            "type": "string"
+          },
+          "adsMessage": {
+            "type": "string"
+          },
+          "indication": {
+            "type": "string"
+          },
+          "voucherType": {
+            "$ref": "#/components/schemas/VoucherTypeDto"
+          },
+          "canTransfer": {
+            "type": "boolean"
+          },
+          "startAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "endAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "keywords": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "procedureCategories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProcedureCategoryDto"
+            }
+          },
+          "serviceBranches": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClinicBranchDto"
+            }
+          },
+          "priceDetails": {
+            "type": "string"
+          },
+          "howToUseVoucherDeal": {
+            "type": "string"
+          },
+          "requireDoctor": {
+            "type": "boolean"
+          },
+          "conditionToUseVoucherDeal": {
+            "type": "string"
+          },
+          "voucherExpireAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "voucherLifeTime": {
+            "type": "number"
+          },
+          "online": {
+            "type": "boolean"
+          },
+          "status": {
+            "enum": [
+              "draft",
+              "review",
+              "reviewed",
+              "approve",
+              "reject"
+            ],
+            "type": "string"
+          },
+          "mainPicture": {
+            "type": "string"
+          },
+          "detailPictures": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "doctorNote",
+          "price",
+          "sellingPrice",
+          "tagPrice",
+          "discountPercentage",
+          "id",
+          "name",
+          "nameEn",
+          "adsMessage",
+          "indication",
+          "voucherType",
+          "canTransfer",
+          "procedureCategories",
+          "serviceBranches",
+          "priceDetails",
+          "howToUseVoucherDeal",
+          "requireDoctor",
+          "conditionToUseVoucherDeal",
+          "voucherExpireAt",
+          "voucherLifeTime",
+          "online",
+          "status",
+          "mainPicture",
+          "detailPictures"
+        ]
+      },
+      "UpdateVoucherDealDto": {
+        "type": "object",
+        "properties": {
+          "doctorNote": {
+            "type": "string",
+            "description": "เงื่อนไข Promotion เพิ่มเติม"
+          },
+          "startAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "FORMAT: YYYY-MM-DD",
+            "example": "2022-10-14"
+          },
+          "endAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "ต้องระบุถ้า startDate มีค่า, FORMAT: YYYY-MM-DD",
+            "example": "2022-10-31"
+          },
+          "price": {
+            "type": "number",
+            "description": "ราคาต้นทุนของ SkinX (ราคาที่ขายให้ SkinX)"
+          },
+          "sellingPrice": {
+            "type": "number",
+            "description": "ราคาที่ SkinX ขายให้คนไข้"
+          },
+          "tagPrice": {
+            "type": "number",
+            "description": "ราคาที่ SkinX ขายให้คนไข้ก่อนลดราคา"
+          },
+          "discountPercentage": {
+            "type": "number",
+            "description": "ส่วนต่างระหว่าง tagPrice กับ sellingPrice"
+          },
+          "procedureCategories": {
+            "description": "Array of procedure category id",
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "serviceBranches": {
+            "description": "Array of clinic branch id",
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "voucherExpireAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "ต้องระบุ ถ้า voucherLifeTime ไม่มีค่า, FORMAT: YYYY-MM-DD",
+            "example": "2022-10-31"
+          },
+          "voucherLifeTime": {
+            "type": "number",
+            "description": "ต้องระบุ ถ้า voucherExpireAt ไม่มีค่า"
+          },
+          "mainPicture": {
+            "type": "string",
+            "format": "binary"
+          },
+          "detailPictures": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "binary"
+            }
+          },
+          "canTransfer": {
+            "type": "boolean",
+            "default": false
+          },
+          "online": {
+            "type": "boolean",
+            "default": false
+          },
+          "status": {
+            "enum": [
+              "draft",
+              "review"
+            ],
+            "type": "string",
+            "default": "draft"
+          },
+          "requireDoctor": {
+            "type": "boolean",
+            "default": false
+          },
+          "name": {
+            "type": "string"
+          },
+          "nameEn": {
+            "type": "string"
+          },
+          "adsMessage": {
+            "type": "string"
+          },
+          "indication": {
+            "type": "string"
+          },
+          "voucherType": {
+            "type": "number"
+          },
+          "keywords": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "priceDetail": {
+            "type": "string"
+          },
+          "howToUseVoucherDeal": {
+            "type": "string"
+          },
+          "conditionToUseVoucherDeal": {
+            "type": "string"
+          }
+        }
+      },
+      "OnlineVoucherDealDto": {
+        "type": "object",
+        "properties": {
+          "online": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "online"
+        ]
+      },
+      "VoucherOrderItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "cost": {
+            "type": "number"
+          },
+          "totalCost": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "totalAmount": {
+            "type": "number"
+          },
+          "tagPrice": {
+            "type": "number"
+          },
+          "sellingPrice": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "quantity",
+          "cost",
+          "totalCost",
+          "unit",
+          "totalAmount",
+          "tagPrice",
+          "sellingPrice"
+        ]
+      },
+      "VoucherOrderDto": {
+        "type": "object",
+        "properties": {
+          "storeDrugOrderId": {
+            "type": "number"
+          },
+          "recordId": {
+            "type": "number"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "trackingNo": {
+            "type": "string"
+          },
+          "clinicName": {
+            "type": "string"
+          },
+          "clinicId": {
+            "type": "number"
+          },
+          "invoiceId": {
+            "type": "number"
+          },
+          "patientDrugOrderId": {
+            "type": "number"
+          },
+          "voucherId": {
+            "type": "number"
+          },
+          "totalAmount": {
+            "type": "number"
+          },
+          "totalCost": {
+            "type": "number"
+          },
+          "note": {
+            "type": "string"
+          },
+          "patientName": {
+            "type": "string"
+          },
+          "doctorName": {
+            "type": "string"
+          },
+          "pharmacistName": {
+            "type": "string"
+          },
+          "refCode": {
+            "type": "string"
+          },
+          "validFromAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "validToAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "isUsed": {
+            "type": "boolean"
+          },
+          "telNo": {
+            "type": "string"
+          },
+          "promotionCode": {
+            "type": "string"
+          },
+          "item": {
+            "$ref": "#/components/schemas/VoucherOrderItemDto"
+          },
+          "paymentMethod": {
+            "enum": [
+              "DEEPLINK",
+              "QR30",
+              "MBANKING",
+              "CREDIT CARD",
+              "INSTALLMENT"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "storeDrugOrderId",
+          "recordId",
+          "createdAt",
+          "updatedAt",
+          "trackingNo",
+          "clinicName",
+          "clinicId",
+          "invoiceId",
+          "patientDrugOrderId",
+          "voucherId",
+          "totalAmount",
+          "totalCost",
+          "note",
+          "patientName",
+          "doctorName",
+          "pharmacistName",
+          "refCode",
+          "validFromAt",
+          "validToAt",
+          "isUsed",
+          "telNo",
+          "promotionCode",
+          "item",
+          "paymentMethod"
+        ]
+      },
+      "RedeemVoucherOrderDto": {
+        "type": "object",
+        "properties": {
+          "isUsed": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "isUsed"
+        ]
+      },
+      "VoucherOrderSummaryDto": {
+        "type": "object",
+        "properties": {
+          "totalIncome": {
+            "type": "number"
+          },
+          "totalSale": {
+            "type": "number"
+          },
+          "totalOrder": {
+            "type": "number"
+          },
+          "newOrder": {
+            "type": "number"
+          },
+          "toShipOrder": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "totalIncome",
+          "totalSale",
+          "totalOrder",
+          "newOrder",
+          "toShipOrder"
+        ]
+      },
+      "ClinicStatusChangedDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "default": "ClinicStatusChanged",
+            "enum": [
+              "ClinicStatusChanged",
+              "VoucherDealStatusChanged",
+              "VoucherOrderCreated"
+            ]
+          },
+          "id": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "reviewed",
+              "review",
+              "reject"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "id",
+          "status"
+        ]
+      },
+      "VoucherDealStatusChangedDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "default": "VoucherDealStatusChanged",
+            "enum": [
+              "ClinicStatusChanged",
+              "VoucherDealStatusChanged",
+              "VoucherOrderCreated"
+            ]
+          },
+          "id": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "review",
+              "reviewed",
+              "approve",
+              "reject"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "id",
+          "status"
+        ]
+      },
+      "VoucherOrderCreatedDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "default": "VoucherOrderCreated",
+            "enum": [
+              "ClinicStatusChanged",
+              "VoucherDealStatusChanged",
+              "VoucherOrderCreated"
+            ]
+          },
+          "order": {
+            "$ref": "#/components/schemas/VoucherOrderDto"
+          }
+        },
+        "required": [
+          "type",
+          "order"
+        ]
+      }
+    }
+  }
+}
