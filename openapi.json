@@ -1253,21 +1253,34 @@
         ]
       }
     },
-    "/jera/webhooks/clinic-status-changed": {
+    "/jera/webhooks/clinic-status-changed/": {
       "post": {
         "operationId": "WebhooksController_clinicStatusChanged",
-        "summary": "This is a dummy endpoint because the endpoint must be created by JERA",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClinicStatusChangedDto"
-                }
+        "summary": "Update clinic registration status",
+        "description": "Full URL: <code>https://{subdomain}.jeracloud.com/jera/webhook/clinic-status-changed/</code><br>",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Token {authtoken}"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClinicStatusChangedDto"
               }
             }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
           }
         },
         "tags": [
@@ -1275,21 +1288,34 @@
         ]
       }
     },
-    "/jera/webhooks/voucher-deal-status-changed": {
+    "/jera/webhooks/voucher-deal-status-changed/": {
       "post": {
         "operationId": "WebhooksController_voucherDealStatusChanged",
-        "summary": "This is a dummy endpoint because the endpoint must be created by JERA",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/VoucherDealStatusChangedDto"
-                }
+        "summary": "Update voucher deal status",
+        "description": "Full URL: <code>https://{subdomain}.jeracloud.com/jera/webhook/voucher-deal-status-changed/</code><br>",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Token {authtoken}"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoucherDealStatusChangedDto"
               }
             }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
           }
         },
         "tags": [
@@ -1297,18 +1323,38 @@
         ]
       }
     },
-    "/jera/webhooks/voucher-order-created": {
+    "/jera/webhooks/voucher-order-created/": {
       "post": {
         "operationId": "WebhooksController_voucherOrderCreated",
-        "summary": "This is a dummy endpoint because the endpoint must be created by JERA",
-        "parameters": [],
+        "summary": "Generate Voucher Code",
+        "description": "Full URL: <code>https://{subdomain}.jeracloud.com/jera/webhook/voucher-order-created/</code><br>เมื่อลูกค้าทำการซื้อ Voucher Deal ผ่าน app SkinX ให้เรียกใช้ API นี้เพื่อให้ทาง JeraCloud ทำการ Generate Voucher Code ให้",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Token {authtoken}"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoucherOrderCreatedDto"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/VoucherOrderCreatedDto"
+                  "$ref": "#/components/schemas/VoucherOrderCreatedResponseDto"
                 }
               }
             }
@@ -1634,6 +1680,13 @@
           },
           "googleLinkMap": {
             "type": "string"
+          },
+          "jeraClinicUUID": {
+            "type": "string"
+          },
+          "jeraClinicSubdomain": {
+            "type": "string",
+            "description": "subdomain สำหรับใช้ในการเรียก API ของ jera (https://{subdomain}.jeracloud.com)"
           }
         },
         "required": [
@@ -2358,6 +2411,9 @@
           },
           "conditionToUseVoucherDeal": {
             "type": "string"
+          },
+          "jeraVoucherTypeId": {
+            "type": "number"
           }
         },
         "required": [
@@ -2378,7 +2434,8 @@
           "voucherType",
           "priceDetail",
           "howToUseVoucherDeal",
-          "conditionToUseVoucherDeal"
+          "conditionToUseVoucherDeal",
+          "jeraVoucherTypeId"
         ]
       },
       "VoucherDealDto": {
@@ -2664,6 +2721,9 @@
           "id": {
             "type": "number"
           },
+          "jeraVoucherTypeId": {
+            "type": "number"
+          },
           "name": {
             "type": "string"
           },
@@ -2691,6 +2751,7 @@
         },
         "required": [
           "id",
+          "jeraVoucherTypeId",
           "name",
           "quantity",
           "cost",
@@ -2941,6 +3002,18 @@
           "type",
           "order"
         ]
+      },
+      "VoucherOrderCreatedResponseDto": {
+        "type": "object",
+        "properties": {
+          "voucherId": {
+            "type": "number"
+          },
+          "voucherCode": {
+            "type": "string",
+            "description": "รหัส voucher ใช้สำหรับ redeem คอร์สในคลินิก"
+          }
+        }
       }
     }
   }
